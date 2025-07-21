@@ -32,3 +32,26 @@ form {
 .form-group {
     align-self: center;
 }
+
+.tdItems {
+    text-align: center;
+}
+
+th {
+    text-align: center;
+}
+
+.required {
+    color: red;
+}
+
+.button {
+    height: 30px;
+    width: 100px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    margin-left: 10px;
+    border-radius: 5px;
+    border: 0;
+}
