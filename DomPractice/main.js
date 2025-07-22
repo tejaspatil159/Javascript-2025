@@ -5,6 +5,8 @@ let required = document.querySelector('required');
 
 document.addEventListener('submit', submitForm)
 
+document.addEventListener('keyup', checkFormValidation)
+
 function submitForm(e) {
     e.preventDefault()
     if (nameField.value !== '') {
@@ -49,6 +51,7 @@ function clearField() {
 
 function AddValidationMessage() {
 
+    nameField.style.border = '1px solid red';
     const nextSibling = nameField.nextElementSibling
     if (nextSibling && nextSibling.classList('required')) {
         return
@@ -59,5 +62,18 @@ function AddValidationMessage() {
         nameField.after(p)
     }
 
+}
+
+function removeValidationMessage() {
+    nameField.style.border = ''
+    nameField.nextElementSibling.remove()
+}
+
+function checkFormValidation() {
+    if (nameField.value !== '') {
+        removeValidationMessage();
+    } else {
+        AddValidationMessage()
+    }
 }
 
