@@ -6,6 +6,7 @@
 
 body {
     height: 100dvh;
+    overflow-x: hidden;
     font-family: Arial, Helvetica, sans-serif;
     display: grid;
     grid-template-columns: auto;
