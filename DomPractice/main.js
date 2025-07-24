@@ -151,7 +151,7 @@ function removeRow(e) {
             if (tableBody.children.length > 0) {
                 tableBody.innerHTML = ''
             }
-            updateTable()
+            updateTable();
         }
     }
 }
