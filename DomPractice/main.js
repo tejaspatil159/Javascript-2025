@@ -129,6 +129,7 @@ function removeValidationMessage() {
     const nextSibling = nameField.nextElementSibling
     if (nextSibling && nextSibling.classList.contains('required')) {
         nameField.nextElementSibling.remove()
+
     }
 }
 
