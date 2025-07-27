@@ -1,9 +1,10 @@
 let nameField = document.getElementById('name');
 let inputForm = document.getElementById('inputForm')
 let tableBody = document.getElementById('tableBody');
-let srNo = 0
 let required = document.querySelector('required');
 let deleteBut = document.querySelector('deleteBut');
+let editBut = document.querySelector('editBut')
+let submitBut = document.querySelector('#submitBut')
 
 let items = []
 
@@ -11,37 +12,44 @@ inputForm.addEventListener('submit', submitForm)
 
 nameField.addEventListener('keyup', checkFormValidation)
 
-tableBody.addEventListener('click', removeRow)
+tableBody.addEventListener('click', buttonClick)
 
 function submitForm(e) {
     e.preventDefault()
 
     if (tableBody.children.length > 0) {
-        tableBody.innerHTML = ''
+        if (nameField.value !== '') {
+            tableBody.innerHTML = ''
+        }
     }
     if (nameField.value !== '') {
         items.push(nameField.value)
-        updateTable()
+        updateTable(true, false)
+
+        if (submitBut.innerText === 'Update') {
+            submitBut.innerText = 'Submit'
+        }
     } else {
         AddValidationMessage()
     }
 }
 
-function updateTable() {
+function updateTable(action, disable) {
     for (let i = 0; i < items.length; i++) {
         let tr = document.createElement('tr')
         tableBody.appendChild(tr)
-        updateValue(tr, items[i])
+        updateValue(tr, i, items[i], disable)
     }
-    clearField()
+    if (action) {
+        clearField()
+    }
 }
 
-function updateValue(tr, item) {
-
+function updateValue(tr, index, item, disable) {
     let tdOfSrNo = document.createElement('td')
     tdOfSrNo.classList = "tdItems"
 
-    tdOfSrNo.appendChild(document.createTextNode(items.indexOf(item) + 1))
+    tdOfSrNo.appendChild(document.createTextNode(index + 1))
 
     let tdOfName = document.createElement('td')
     tdOfName.classList = "tdItems "
@@ -51,6 +59,12 @@ function updateValue(tr, item) {
     let tdOfAction = document.createElement('td')
     tdOfAction.classList = "tdItems text-truncate"
 
+    let editBut = document.createElement('button')
+    editBut.classList = 'editBut bg-success text-white border-0 px-2 mx-2'
+
+    editBut.appendChild(document.createTextNode('Edit'))
+    tdOfAction.appendChild(editBut)
+
     let closeBut = document.createElement('button')
     closeBut.classList = 'deleteBut bg-danger text-white border-0 px-2'
 
@@ -59,9 +73,16 @@ function updateValue(tr, item) {
 
 
 
+
     tr.appendChild(tdOfSrNo)
     tr.appendChild(tdOfName)
     tr.appendChild(tdOfAction)
+
+    if (disable) {
+        editBut.setAttribute('disabled', '')
+        closeBut.setAttribute('disabled', '')
+    }
+
 
 
 
@@ -141,19 +162,57 @@ function checkFormValidation() {
     }
 }
 
-function removeRow(e) {
-    if (e.target.classList.contains('deleteBut')) {
-        if (confirm('Do you want to delete the record?')) {
-            let tr = e.target.parentElement.parentElement;
+function buttonClick(e) {
+    let but = e.target
+    if (but.classList.contains('deleteBut')) {
+        let tr = e.target.parentElement.parentElement;
+        if (confirm('Do you want to delete this record?')) {
             tableBody.removeChild(tr)
-            items.splice(1, 1)
+            items.splice(items.indexOf((e.target.parentElement.previousSibling).innerText), 1)
 
+            tableBody.innerHTML = ''
 
-            if (tableBody.children.length > 0) {
-                tableBody.innerHTML = ''
-            }
-            updateTable();
+            updateTable(true, false);
         }
     }
+
+    if (but.classList.contains('editBut')) {
+        let tr = e.target.parentElement.parentElement;
+        nameField.value = (e.target.parentElement.previousSibling).innerText
+        tableBody.removeChild(tr)
+        items.splice(items.indexOf((e.target.parentElement.previousSibling).innerText), 1)
+
+        tableBody.innerHTML = ''
+
+        updateTable(false, true);
+        submitBut.innerText = 'Update'
+    }
 }
+
+// function removeRow(e) {
+//     let tr = e.target.parentElement.parentElement;
+//     if (e.target.classList.contains('deleteBut')) {
+//         if (confirm('Do you want to delete this record?')) {
+//             tableBody.removeChild(tr)
+//             items.splice(items.indexOf((e.target.parentElement.previousSibling).innerText), 1)
+
+//             tableBody.innerHTML = ''
+
+//             updateTable(true, false);
+//         }
+//     }
+//     // else {
+//     //     tableBody.removeChild(tr)
+//     //     items.splice(items.indexOf((e.target.parentElement.previousSibling).innerText), 1)
+
+//     //     tableBody.innerHTML = ''
+
+//     //     updateTable();
+//     // }
+// }
+
+// function editElement(e) {
+//     nameField.value = (e.target.parentElement.previousSibling).innerText
+//     removeRow(e)
+// }
 

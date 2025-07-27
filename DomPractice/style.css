@@ -56,3 +56,38 @@ th {
     border-radius: 5px;
     border: 0;
 }
+
+[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+thead,
+tbody,
+tr {
+    display: block;
+}
+
+tbody {
+    height: 60dvh;
+    /* Or px, %, etc. */
+    overflow-y: auto;
+    /* Scroll vertically */
+}
+
+thead tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
