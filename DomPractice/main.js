@@ -54,6 +54,7 @@ function updateValue(tr, index, item, disable) {
     let tdOfName = document.createElement('td')
     tdOfName.classList = "tdItems "
 
+    tdOfName.setAttribute('title', item)
     tdOfName.appendChild(document.createTextNode(item))
 
     let tdOfAction = document.createElement('td')
