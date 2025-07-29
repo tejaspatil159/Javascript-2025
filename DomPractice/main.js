@@ -5,14 +5,18 @@ let required = document.querySelector('required');
 let deleteBut = document.querySelector('deleteBut');
 let editBut = document.querySelector('editBut')
 let submitBut = document.querySelector('#submitBut')
+let filterField = document.querySelector('#filter');
 
 let items = []
+let filterItems = []
 
 inputForm.addEventListener('submit', submitForm)
 
 nameField.addEventListener('keyup', checkFormValidation)
 
 tableBody.addEventListener('click', buttonClick)
+
+filterField.addEventListener('input', filterList)
 
 function submitForm(e) {
     e.preventDefault()
@@ -24,7 +28,7 @@ function submitForm(e) {
     }
     if (nameField.value !== '') {
         items.push(nameField.value)
-        updateTable(true, false)
+        updateTable(true, false, false)
 
         if (submitBut.innerText === 'Update') {
             submitBut.innerText = 'Submit'
@@ -34,11 +38,12 @@ function submitForm(e) {
     }
 }
 
-function updateTable(action, disable) {
-    for (let i = 0; i < items.length; i++) {
+function updateTable(action, disable, isFilteration) {
+    let item = isFilteration ? filterItems : items
+    for (let i = 0; i < item.length; i++) {
         let tr = document.createElement('tr')
         tableBody.appendChild(tr)
-        updateValue(tr, i, items[i], disable)
+        updateValue(tr, i, item[i], disable)
     }
     if (action) {
         clearField()
@@ -173,7 +178,7 @@ function buttonClick(e) {
 
             tableBody.innerHTML = ''
 
-            updateTable(true, false);
+            updateTable(true, false, false);
         }
     }
 
@@ -185,7 +190,7 @@ function buttonClick(e) {
 
         tableBody.innerHTML = ''
 
-        updateTable(false, true);
+        updateTable(false, true, false);
         submitBut.innerText = 'Update'
     }
 }
@@ -217,3 +222,16 @@ function buttonClick(e) {
 //     removeRow(e)
 // }
 
+function filterList(e) {
+    let filterValue = e.target.value;
+    if (filterValue) {
+        filterItems = items.filter(a => a.toLowerCase().includes(filterValue.toLowerCase()))
+
+        tableBody.innerHTML = ''
+        updateTable(false, false, true)
+    } else {
+        tableBody.innerHTML = ''
+        updateTable(false, false, false)
+    }
+
+}

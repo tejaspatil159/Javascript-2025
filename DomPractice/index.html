@@ -16,13 +16,21 @@
     </header>
     <div class="container">
         <main class="d-flex flex-column justify-content-start h-100">
-            <form id="inputForm" name="inputForm">
+            <div class="d-flex justify-content-between">
+                <form id="inputForm" name="inputForm">
+                    <div class="form-group">
+                        <label for="name">Name : </label>
+                        <input id="name" class="px-2" type="text" placeholder="Enter Name">
+                    </div>
+                    <button id="submitBut" class="button" type="submit">Submit</button>
+                </form>
                 <div class="form-group">
-                    <label for="name">Name : </label>
-                    <input id="name" class="px-2" type="text" placeholder="Enter Name">
+                    <label for="filter">Name : </label>
+                    <input id="filter" class="px-2" type="text" placeholder="Filter Name">
                 </div>
-                <button id="submitBut" class="button" type="submit">Submit</button>
-            </form>
+            </div>
+
+
             <table id="mainTable" class=" table table-bordered table-striped mt-4">
                 <thead>
                     <tr>
